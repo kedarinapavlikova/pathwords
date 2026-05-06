@@ -16,20 +16,18 @@
     --sage-dark: #7a8c68;
     --charcoal: #333333;
     --pink: #F2C6C2;
-    --blue: #A8D0E6;
     --pink-dark: #e09a94;
     --red: #e05555;
+    --placeholder: #bbbbbb;
+    --found-border: #e8e4cc;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-  html, body {
-    background: #FFFFFF !important;
-    color-scheme: light only !important;
-  }
+  html { background: var(--bg); color-scheme: light only !important; }
 
   body {
-    background: #FFFFFF !important;
+    background: var(--bg);
     font-family: 'Nunito', sans-serif;
     color: var(--charcoal);
     min-height: 100vh;
@@ -38,9 +36,11 @@
     align-items: center;
     overflow-x: hidden;
     padding-bottom: 40px;
+    transition: background 0.3s, color 0.3s;
   }
 
   .header {
+    position: relative; z-index: 1;
     text-align: center;
     padding: 22px 20px 6px;
   }
@@ -54,6 +54,14 @@
   }
 
   .logo span { color: var(--pink-dark); }
+
+  .tagline {
+    font-size: 0.88rem;
+    color: var(--sage-dark);
+    font-weight: 700;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
 
   .score-bar {
     display: flex;
@@ -86,7 +94,7 @@
   .found-section {
     width: 100%; max-width: 520px;
     padding: 0 16px;
-    margin: 6px 0;
+    margin: 4px 0;
   }
 
   .found-label {
@@ -105,7 +113,7 @@
     min-height: 34px;
     background: var(--cream);
     border-radius: 14px;
-    border: 2px solid #e8e4cc;
+    border: 2px solid var(--found-border);
     padding: 7px 10px;
   }
 
@@ -128,7 +136,7 @@
   .builder-section {
     width: 100%; max-width: 520px;
     padding: 0 16px;
-    margin: 8px 0 0;
+    margin: 8px 0 3px;
   }
 
   .word-display {
@@ -184,12 +192,12 @@
 
   @keyframes letterAppear {
     from { transform: scale(0) translateY(8px); opacity: 0; }
-    to   { transform: scale(1) translateY(0);   opacity: 1; }
+    to   { transform: scale(1) translateY(0); opacity: 1; }
   }
 
   .placeholder-text {
     font-size: 0.92rem;
-    color: #bbb;
+    color: var(--placeholder);
     font-weight: 700;
   }
 
@@ -207,19 +215,15 @@
   .feedback.bad  { color: var(--red); }
   .feedback.dup  { color: var(--gold-dark); }
 
-  /* 9-letter grid: 3×3 */
   .hex-section {
-    margin: 18px 0 18px;
+    margin: 8px 0 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
   }
 
-  .hex-row {
-    display: flex;
-    gap: 9px;
-  }
+  .hex-row { display: flex; gap: 9px; }
 
   .hex-btn {
     width: clamp(64px, 16vw, 80px);
@@ -248,10 +252,9 @@
   }
 
   .actions {
-    position: relative; z-index: 1;
     display: flex;
-    gap: 9px;
-    margin: 18px 0 4px;
+    gap: 14px;
+    margin: 12px 0 6px;
     flex-wrap: wrap;
     justify-content: center;
     padding: 0 16px;
@@ -284,9 +287,9 @@
   }
 
   .btn-clear {
-    background: white;
+    background: var(--cream);
     color: var(--charcoal);
-    border: 2.5px solid #ddd;
+    border: 2.5px solid var(--found-border);
     padding: 10px 16px;
   }
 
@@ -305,6 +308,14 @@
     cursor: not-allowed;
   }
 
+  .btn-share {
+    background: var(--pink);
+    color: var(--charcoal);
+    border: 2.5px solid var(--pink-dark);
+    font-size: 0.95rem;
+    padding: 10px 28px;
+  }
+
   .btn-new {
     background: var(--gold);
     color: var(--charcoal);
@@ -313,15 +324,179 @@
     padding: 8px 20px;
   }
 
-  .divider-vine {
+  .progress-section {
     text-align: center;
-    font-size: 0.75rem;
-    color: #ddd;
-    margin: 6px 0;
-    user-select: none;
-    letter-spacing: 4px;
+    margin: 4px 0 0;
+    min-height: 28px;
   }
 
+  .progress-flowers { font-size: 1.15rem; letter-spacing: 3px; }
+
+  /* ── Theme picker ───────────────────────────── */
+  .theme-section {
+    width: 100%; max-width: 520px;
+    padding: 24px 16px 0;
+    margin-top: 20px;
+    border-top: 2px dashed var(--found-border);
+  }
+
+  .theme-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--sage-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .theme-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .theme-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 2px solid var(--found-border);
+    background: var(--cream);
+    cursor: pointer;
+    min-width: 58px;
+    font-family: 'Nunito', sans-serif;
+    transition: transform 0.12s;
+    outline: none;
+  }
+
+  .theme-btn:active { transform: scale(0.92); }
+
+  .theme-btn.active {
+    border: 2.5px solid var(--gold-dark);
+    background: var(--pollen);
+  }
+
+  .theme-emoji { font-size: 1.3rem; }
+
+  .theme-name {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: var(--sage-dark);
+  }
+
+  /* ── AI Theme Generator ─────────────────────── */
+  .ai-theme-section {
+    width: 100%; max-width: 520px;
+    padding: 10px 16px 0;
+    margin-top: 20px;
+  }
+
+  .ai-theme-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--sage-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .ai-theme-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .ai-theme-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 30px;
+    border: 2.5px solid var(--found-border);
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .ai-theme-input:focus {
+    border-color: var(--gold);
+  }
+
+  .ai-theme-input::placeholder {
+    color: var(--placeholder);
+  }
+
+  .btn-ai {
+    background: var(--gold);
+    color: var(--charcoal);
+    border: 2.5px solid var(--gold-dark);
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 0.88rem;
+  }
+
+  .btn-ai:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .ai-status {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--sage-dark);
+    min-height: 22px;
+    margin-top: 6px;
+  }
+
+  /* ── Level-up toast ─────────────────────────── */
+  .levelup-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: var(--pollen);
+    border: 3px solid var(--gold);
+    border-radius: 24px;
+    padding: 22px 36px;
+    text-align: center;
+    z-index: 200;
+    pointer-events: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    animation: toastPop 2.4s ease forwards;
+  }
+
+  .levelup-toast .toast-emoji { font-size: 2.4rem; display: block; margin-bottom: 6px; }
+  .levelup-toast .toast-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: var(--charcoal);
+    display: block;
+  }
+  .levelup-toast .toast-sub {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--sage-dark);
+    display: block;
+    margin-top: 3px;
+  }
+
+  @keyframes toastPop {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+    15%  { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    25%  { transform: translate(-50%, -50%) scale(1); }
+    75%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+  }
+
+  /* ── Confetti ───────────────────────────────── */
   .confetti-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -341,21 +516,6 @@
     0%   { transform: translateY(-20px) rotate(0deg) scale(1); opacity: 1; }
     100% { transform: translateY(90px) rotate(380deg) scale(0.2); opacity: 0; }
   }
-
-  .progress-section {
-    text-align: center;
-    margin: 4px 0 0;
-    min-height: 28px; /* fixed height — never causes layout shift */
-  }
-
-  .progress-flowers { font-size: 1.15rem; letter-spacing: 3px; }
-
-  .divider {
-    width: 100%; max-width: 520px;
-    border: none;
-    border-top: 2px dashed #e8e4cc;
-    margin: 9px 0;
-  }
 </style>
 </head>
 <body>
@@ -363,24 +523,24 @@
 <div class="confetti-container" id="confettiContainer"></div>
 
 <div class="header">
-  <div class="logo">🌹 Path<span>Words</span></div>
+  <div class="logo" id="logoEl">🌹 Path<span>Words</span></div>
+  <div class="tagline" id="taglineEl">🌿 Wander the garden · Find words · Bloom! 🌸</div>
 </div>
 
 <div class="score-bar">
   <div class="score-pill"><span class="label">Words</span><span id="wordCount">0</span></div>
   <div class="score-pill"><span class="label">Points</span><span id="scoreCount">0</span></div>
-  <button class="btn btn-new" onclick="newGame()">🌹 New Game</button>
+  <div class="score-pill" id="levelPill"><span class="label">Level</span><span id="levelName">🌱 Seedling</span></div>
+  <button class="btn btn-new" id="newGameBtn" onclick="newGame()">🌹 New Game</button>
 </div>
 
-<div class="divider-vine">· · ·</div>
 <div class="found-section">
-  <div class="found-label">🌹 Words found</div>
+  <div class="found-label" id="foundLabel">🌹 Words found</div>
   <div class="found-words" id="foundWords">
     <span class="placeholder-text">No words yet — tap letters below!</span>
   </div>
 </div>
 
-<div class="divider-vine">· · ·</div>
 <div class="builder-section">
   <div class="word-display" id="wordDisplay">
     <span class="placeholder-text">Tap letters to start!</span>
@@ -396,10 +556,28 @@
   <button class="btn btn-clear" onclick="clearWord()">✕ Clear</button>
 </div>
 
+<div class="actions" style="margin-top:4px;">
+  <button class="btn btn-share" id="shareBtn" onclick="shareScore()">🌸 Share my score</button>
+</div>
+<div id="shareConfirm" style="height:22px;text-align:center;font-size:0.85rem;font-weight:800;color:var(--sage-dark);margin-top:2px;"></div>
+
 <div class="progress-section" id="progressSection"></div>
 
+<div class="theme-section">
+  <div class="theme-label">🎨 Choose a theme</div>
+  <div class="theme-row" id="themeRow"></div>
+</div>
+
+<div class="ai-theme-section">
+  <div class="ai-theme-label">✨ Make your own theme</div>
+  <div class="ai-theme-row">
+    <input class="ai-theme-input" id="aiThemeInput" type="text" placeholder="e.g. underwater pirates, cozy winter…" maxlength="60" />
+    <button class="btn btn-ai" id="aiThemeBtn" onclick="generateAITheme()">✨ Create</button>
+  </div>
+  <div class="ai-status" id="aiStatus"></div>
+</div>
+
 <script>
-// ─── WORD LIST ─────────────────────────────────────────────────────────────────
 const WORD_LIST = new Set([
   "abandon","ability","able","about","above","abrupt","absence","academy","accept","ace","aced","aces",
   "ache","acme","acorn","acre","across","act","active","actor","acts","actual","add","adopt",
@@ -593,47 +771,232 @@ const WORD_LIST = new Set([
   "wren","wrist","writ","write","writing","wrong","ya","yacht","yak","yam","yap","yard",
   "yarn","ye","year","yearn","yell","yellow","yew","yo","yodel","you","young","your",
   "yourself","youth","zap","zero","zigzag","zit","zone","zoo"
-]);;
+])
 
-// ─── 9-LETTER SETS ─────────────────────────────────────────────────────────────
-// Each set has exactly 9 unique letters, 3–4 vowels, rest common consonants
-// All sets tested to yield many 2–6 letter words
+// ─── LETTER SETS ─────────────────────────────────────────────────────────────
 const LETTER_SETS = [
-  ['A','E','I','O','R','S','T','N','L'],  // Garden Path
-  ['A','E','O','U','R','S','T','N','D'],  // Sunny Meadow
-  ['A','E','I','U','R','S','T','N','B'],  // Rosebush
-  ['A','E','O','I','L','S','T','C','H'],  // Daisy Field
-  ['A','E','O','U','L','S','T','C','R'],  // Morning Dew
-  ['A','E','I','O','N','R','S','T','G'],  // Petal Lane
-  ['A','E','I','U','N','R','S','L','D'],  // Wildflower
-  ['A','O','U','I','T','R','S','N','G'],  // Blossom Walk
-  ['A','E','O','U','T','R','S','N','F'],  // Forest Glen
-  ['E','I','O','A','R','N','S','T','P'],  // Clover Hill
-  ['A','E','I','O','R','S','T','D','W'],  // Dewdrop Path
-  ['A','E','U','O','R','N','S','T','G'],  // Honeybee Run
-  ['A','E','I','O','B','C','L','N','R'],  // Birch Grove
-  ['A','I','O','U','R','S','T','L','N'],  // Tulip Garden
-  ['A','E','O','I','R','S','N','D','P'],  // Pond Walk
-  ['A','E','I','U','M','R','S','T','N'],  // Lily Pond
-  ['E','O','A','U','T','H','R','S','N'],  // Heather Moor
-  ['A','E','I','O','R','S','F','T','N'],  // Fern Trail
-  ['A','E','I','O','R','S','T','C','K'],  // Rosecroft
-  ['A','E','O','U','B','R','S','T','N'],  // Sunburst
+  ['A','E','I','O','R','S','T','N','L'],
+  ['A','E','O','U','R','S','T','N','D'],
+  ['A','E','I','U','R','S','T','N','B'],
+  ['A','E','O','I','L','S','T','C','H'],
+  ['A','E','O','U','L','S','T','C','R'],
+  ['A','E','I','O','N','R','S','T','G'],
+  ['A','E','I','U','N','R','S','L','D'],
+  ['A','O','U','I','T','R','S','N','G'],
+  ['A','E','O','U','T','R','S','N','F'],
+  ['E','I','O','A','R','N','S','T','P'],
+  ['A','E','I','O','R','S','T','D','W'],
+  ['A','E','U','O','R','N','S','T','G'],
+  ['A','E','I','O','B','C','L','N','R'],
+  ['A','I','O','U','R','S','T','L','N'],
+  ['A','E','O','I','R','S','N','D','P'],
+  ['A','E','I','U','M','R','S','T','N'],
+  ['E','O','A','U','T','H','R','S','N'],
+  ['A','E','I','O','R','S','F','T','N'],
+  ['A','E','I','O','R','S','T','C','K'],
+  ['A','E','O','U','B','R','S','T','N'],
 ];
+
+// ─── THEMES ──────────────────────────────────────────────────────────────────
+const THEMES = {
+  garden: {
+    key: 'garden', emoji: '🌹', name: 'Garden',
+    vars: {
+      '--bg':'#FFFFFF','--cream':'#FDFCF0','--pollen':'#FEF5C8',
+      '--gold':'#F4C430','--gold-dark':'#d4a820',
+      '--sage':'#A3B18A','--sage-dark':'#7a8c68',
+      '--charcoal':'#333333','--pink':'#F2C6C2','--pink-dark':'#e09a94',
+      '--red':'#e05555','--placeholder':'#bbbbbb','--found-border':'#e8e4cc',
+    },
+    levels: ['🌱 Seedling','🌸 Blooming','🌺 Flourishing','🌻 Garden Master'],
+    newGame: '🌹 New Game',
+    share: '🌸 Share my score',
+    confetti: ['🌸','🌼','✨','🌺','💛','🌷','⭐','🌻','💫','🎉'],
+    progress: ['🌸','🌼','🌺','🌷','🌻','💐','🌹','🏵️'],
+    success(len, pts) {
+      if (len <= 2) return `✨ Nice! ${pts}`;
+      if (len === 3) return `🌸 Good! ${pts}`;
+      if (len === 4) return `🌺 Great! ${pts}`;
+      if (len === 5) return `🌼 Brilliant! ${pts}`;
+      return `🌻 Amazing! ${pts}`;
+    },
+  },
+  galactic: {
+    key: 'galactic', emoji: '🚀', name: 'Galactic',
+    vars: {
+      '--bg':'#080818','--cream':'#10102e','--pollen':'#1c1a40',
+      '--gold':'#bb86fc','--gold-dark':'#9945e0',
+      '--sage':'#03dac6','--sage-dark':'#80deea',
+      '--charcoal':'#e8e0ff','--pink':'#1c1a40','--pink-dark':'#bb86fc',
+      '--red':'#ff5252','--placeholder':'#9d7fe0','--found-border':'#5a4090',
+    },
+    levels: ['🚀 Cadet','🛸 Pilot','🪐 Commander','🌌 Galaxy Brain'],
+    newGame: '🚀 New Game',
+    share: '🌠 Share my score',
+    confetti: ['🚀','🪐','👾','🛰️','🌠','🛸','✨','⭐','💫','🌌'],
+    progress: ['🚀','🪐','👨‍🚀','👾','🛰️','🌠','🛸','🌌'],
+    success(len, pts) {
+      if (len <= 2) return `✨ Nice! ${pts}`;
+      if (len === 3) return `🛸 Good! ${pts}`;
+      if (len === 4) return `🪐 Great! ${pts}`;
+      if (len === 5) return `🚀 Brilliant! ${pts}`;
+      return `🌌 Amazing! ${pts}`;
+    },
+  },
+  candy: {
+    key: 'candy', emoji: '🍬', name: 'Candy',
+    vars: {
+      '--bg':'#fff0f8','--cream':'#ffe8f4','--pollen':'#ffd0e8',
+      '--gold':'#ff69b4','--gold-dark':'#e0408a',
+      '--sage':'#2dcc7a','--sage-dark':'#1a8a50',
+      '--charcoal':'#3a0030','--pink':'#fff4a0','--pink-dark':'#ccaa00',
+      '--red':'#ff2244','--placeholder':'#cc88aa','--found-border':'#f0a0cc',
+    },
+    levels: ['🍬 Nibble','🍩 Sweet Tooth','🧁 Sugar Rush','🎂 Candy Master'],
+    newGame: '🍬 New Game',
+    share: '🧁 Share my score',
+    confetti: ['🍭','🍦','🍩','🧁','🍬','🍫','🍨','⭐','✨','💛'],
+    progress: ['🍭','🍦','🍩','🥨','🧁','🍬','🍫','🍨'],
+    success(len, pts) {
+      if (len <= 2) return `🍬 Nice! ${pts}`;
+      if (len === 3) return `🍩 Good! ${pts}`;
+      if (len === 4) return `🧁 Great! ${pts}`;
+      if (len === 5) return `🍭 Brilliant! ${pts}`;
+      return `🎂 Amazing! ${pts}`;
+    },
+  },
+  prehistoric: {
+    key: 'prehistoric', emoji: '🦖', name: 'Dino',
+    vars: {
+      '--bg':'#0d1a08','--cream':'#162210','--pollen':'#1e3015',
+      '--gold':'#ff8c00','--gold-dark':'#cc6000',
+      '--sage':'#66bb6a','--sage-dark':'#a5d6a7',
+      '--charcoal':'#f0f4e8','--pink':'#1e2a18','--pink-dark':'#ff8c00',
+      '--red':'#ff5252','--placeholder':'#7aaa5a','--found-border':'#4a7a2a',
+    },
+    levels: ['🥚 Hatchling','🦎 Juvenile','🦕 Apex','🦖 T-Rex'],
+    newGame: '🦖 New Game',
+    share: '🦴 Share my score',
+    confetti: ['🦖','🦕','🌋','🦴','🌴','🍃','🥚','🦎','⭐','✨'],
+    progress: ['🦖','🦕','🌋','🦴','🌴','🍃','🥚','🦎'],
+    success(len, pts) {
+      if (len <= 2) return `🥚 Nice! ${pts}`;
+      if (len === 3) return `🦴 Good! ${pts}`;
+      if (len === 4) return `🦕 Great! ${pts}`;
+      if (len === 5) return `🦖 Brilliant! ${pts}`;
+      return `🌋 Amazing! ${pts}`;
+    },
+  },
+  fairytale: {
+    key: 'fairytale', emoji: '🏰', name: 'Fairytale',
+    vars: {
+      '--bg':'#f8f4ff','--cream':'#f0e8ff','--pollen':'#e2d0ff',
+      '--gold':'#9966dd','--gold-dark':'#7744bb',
+      '--sage':'#5a8a40','--sage-dark':'#3a6020',
+      '--charcoal':'#2a1a4a','--pink':'#fff0a0','--pink-dark':'#cc9900',
+      '--red':'#cc2244','--placeholder':'#aa88cc','--found-border':'#ccbbee',
+    },
+    levels: ['🍄 Apprentice','🧚 Enchanter','🦄 Wizard','👑 Royalty'],
+    newGame: '🏰 New Game',
+    share: '🦄 Share my score',
+    confetti: ['🦄','🏰','🍄','🧚','👑','🪄','🦉','💎','✨','💜'],
+    progress: ['🦄','🏰','🍄','🧚','👑','🪄','🦉','💎'],
+    success(len, pts) {
+      if (len <= 2) return `✨ Nice! ${pts}`;
+      if (len === 3) return `🍄 Good! ${pts}`;
+      if (len === 4) return `🏰 Great! ${pts}`;
+      if (len === 5) return `🦄 Brilliant! ${pts}`;
+      return `💎 Amazing! ${pts}`;
+    },
+  },
+  puppies: {
+    key: 'puppies', emoji: '🐶', name: 'Puppies',
+    vars: {
+      '--bg':'#f4f8ff','--cream':'#e8f0ff','--pollen':'#d0e4ff',
+      '--gold':'#5a9ae0','--gold-dark':'#2a6abf',
+      '--sage':'#4a80cc','--sage-dark':'#1a4a9a',
+      '--charcoal':'#1a2a4a','--pink':'#ffd8e8','--pink-dark':'#e87aaa',
+      '--red':'#e03060','--placeholder':'#88aacc','--found-border':'#b0ccee',
+    },
+    levels: ['🐾 Puppy','🐶 Good Boy','🐕 Best Boy','🏆 Top Dog'],
+    newGame: '🐶 New Game',
+    share: '🐾 Share my score',
+    confetti: ['🐶','🐾','⭐','🦴','💙','🐕','✨','🌟','💫','🎉'],
+    progress: ['🐶','🐾','🦴','🐕','🐩','🐶','🐾','🦴'],
+    success(len, pts) {
+      if (len <= 2) return `✨ Nice! ${pts}`;
+      if (len === 3) return `🐾 Good! ${pts}`;
+      if (len === 4) return `🐶 Great! ${pts}`;
+      if (len === 5) return `🦴 Brilliant! ${pts}`;
+      return `🐕 Amazing! ${pts}`;
+    },
+  },
+};
+
+let currentTheme = THEMES.garden;
 
 // ─── GAME STATE ───────────────────────────────────────────────────────────────
 let letters = [];
 let currentWord = [];
 let foundWords = [];
 let score = 0;
-const FLOWERS = ['🌸','🌼','🌺','🌷','🌻','💐','🌹','🏵️'];
+let currentLevel = 0;
+const LEVEL_MILESTONES = [0, 50, 100, 150];
 
+// ─── THEME SYSTEM ────────────────────────────────────────────────────────────
+function applyTheme(key) {
+  const theme = THEMES[key];
+  if (!theme) return;
+  currentTheme = theme;
+
+  // Apply CSS variables
+  const root = document.documentElement;
+  Object.entries(theme.vars).forEach(([k, v]) => root.style.setProperty(k, v));
+
+  // Update text content
+  document.getElementById('logoEl').innerHTML = theme.logo;
+  document.getElementById('taglineEl').textContent = theme.tagline;
+  document.getElementById('foundLabel').textContent = theme.foundLabel;
+  document.getElementById('newGameBtn').textContent = theme.newGame;
+  document.getElementById('shareBtn').textContent = theme.share;
+
+  // Refresh level name in new theme's vocabulary
+  const levels = theme.levels || ['🌱 Lv1','🌸 Lv2','🌺 Lv3','🌻 Lv4'];
+  document.getElementById('levelName').textContent = levels[Math.min(currentLevel, levels.length - 1)];
+
+  // Update progress if words found
+  if (foundWords.length > 0) updateProgress();
+
+  // Mark active button
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === key);
+  });
+
+  // Save preference
+  try { localStorage.setItem('pathwords-theme', key); } catch {}
+}
+
+function buildThemePicker() {
+  const row = document.getElementById('themeRow');
+  row.innerHTML = '';
+  Object.values(THEMES).forEach(theme => {
+    const btn = document.createElement('button');
+    btn.className = 'theme-btn' + (theme.key === 'garden' ? ' active' : '');
+    btn.dataset.theme = theme.key;
+    btn.innerHTML = `<span class="theme-emoji">${theme.emoji}</span><span class="theme-name">${theme.name}</span>`;
+    btn.onclick = () => applyTheme(theme.key);
+    row.appendChild(btn);
+  });
+}
+
+// ─── GAME FUNCTIONS ───────────────────────────────────────────────────────────
 function newGame() {
   const set = LETTER_SETS[Math.floor(Math.random() * LETTER_SETS.length)];
   letters = [...set].sort(() => Math.random() - 0.5);
   currentWord = [];
   foundWords = [];
   score = 0;
+  currentLevel = 0;
   renderGrid();
   renderFoundWords();
   updateScore();
@@ -654,8 +1017,8 @@ function renderGrid() {
       btn.id = `hex-${i}`;
       btn.textContent = letters[i];
       btn.setAttribute('aria-label', `Letter ${letters[i]}`);
-      btn.addEventListener('click', () => tapLetter(i));
-      btn.addEventListener('touchstart', e => { e.preventDefault(); tapLetter(i); }, {passive:false});
+      btn.setAttribute('tabindex', '-1');
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); tapLetter(i); });
       rowDiv.appendChild(btn);
     });
     section.appendChild(rowDiv);
@@ -705,52 +1068,47 @@ const wordCache = {};
 
 async function submitWord() {
   const word = currentWord.map(l => l.letter).join('').toLowerCase();
+  const theme = currentTheme; // capture NOW — don't let theme switching affect the emoji
   if (word.length < 2) { setFeedback('Need 2+ letters! 🌱', 'bad'); return; }
   if (foundWords.includes(word)) {
-    setFeedback('Already found that one! 🌸', 'dup');
+    setFeedback('Already found that one!', 'dup');
     shakeBuild(); return;
   }
 
-  // Lock button during check
   document.getElementById('submitBtn').disabled = true;
 
-  // 1. Check local list instantly
   if (WORD_LIST.has(word)) {
     document.getElementById('submitBtn').disabled = false;
-    acceptWord(word); return;
+    acceptWord(word, theme); return;
   }
 
-  // 2. Check cache (already looked this up before)
   if (word in wordCache) {
     document.getElementById('submitBtn').disabled = false;
-    if (wordCache[word]) { acceptWord(word); }
-    else { rejectWord(word); }
+    if (wordCache[word]) { acceptWord(word, theme); } else { rejectWord(word); }
     return;
   }
 
-  // 3. Hit the free dictionary API
   setFeedback('🔍 Checking...', '');
   try {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
     wordCache[word] = res.ok;
     document.getElementById('submitBtn').disabled = false;
-    if (res.ok) { acceptWord(word); }
-    else { rejectWord(word); }
+    if (res.ok) { acceptWord(word, theme); } else { rejectWord(word); }
   } catch {
-    // Offline fallback — local list only
     document.getElementById('submitBtn').disabled = false;
     rejectWord(word);
   }
 }
 
-function acceptWord(word) {
+function acceptWord(word, theme) {
   foundWords.push(word);
   score += word.length;
   updateScore();
   renderFoundWords();
   triggerConfetti();
   glowBuild();
-  setFeedback(successMsg(word.length), 'good');
+  const pts = `+${word.length} point${word.length > 1 ? 's' : ''}`;
+  setFeedback(theme.success(word.length, pts), 'good');
   updateProgress();
   currentWord = [];
   setTimeout(updateWordDisplay, 300);
@@ -761,15 +1119,6 @@ function rejectWord(word) {
   shakeBuild();
   currentWord = [];
   updateWordDisplay();
-}
-
-function successMsg(len) {
-  const pts = `+${len} point${len > 1 ? 's' : ''}`;
-  if (len <= 2) return `✨ Nice! ${pts}`;
-  if (len === 3) return `🌸 Good! ${pts}`;
-  if (len === 4) return `🌺 Great! ${pts}`;
-  if (len === 5) return `🌼 Brilliant! ${pts}`;
-  return `🌻 Amazing! ${pts}`;
 }
 
 function shakeBuild() {
@@ -798,31 +1147,57 @@ function renderFoundWords() {
     el.innerHTML = '<span class="placeholder-text">No words yet — tap letters below!</span>';
     return;
   }
-  // First word: clear placeholder and add chip
   if (foundWords.length === 1) { el.innerHTML = ''; }
-  // Always prepend the newest word only
-  const word = foundWords[foundWords.length - 1];
   const chip = document.createElement('span');
   chip.className = 'word-chip';
-  chip.textContent = word;
+  chip.textContent = foundWords[foundWords.length - 1];
   el.insertBefore(chip, el.firstChild);
 }
 
 function updateScore() {
   document.getElementById('wordCount').textContent = foundWords.length;
   document.getElementById('scoreCount').textContent = score;
+
+  // Work out which level we're on
+  const newLevel = LEVEL_MILESTONES.filter(m => score >= m).length - 1;
+  const levels = currentTheme.levels || ['🌱 Lv1','🌸 Lv2','🌺 Lv3','🌻 Lv4'];
+  document.getElementById('levelName').textContent = levels[Math.min(newLevel, levels.length - 1)];
+
+  // Fire level-up if we just crossed a milestone
+  if (newLevel > currentLevel) {
+    currentLevel = newLevel;
+    showLevelUp(levels[Math.min(currentLevel, levels.length - 1)]);
+  }
+}
+
+function showLevelUp(levelName) {
+  // Big confetti burst
+  triggerConfetti();
+  triggerConfetti();
+
+  // Toast
+  const toast = document.createElement('div');
+  toast.className = 'levelup-toast';
+  toast.innerHTML = `
+    <span class="toast-emoji">🎉</span>
+    <span class="toast-title">Level Up!</span>
+    <span class="toast-sub">${levelName}</span>
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
 }
 
 function updateProgress() {
+  const p = currentTheme.progress;
   const section = document.getElementById('progressSection');
-  const flowers = foundWords.map((_, i) => FLOWERS[i % FLOWERS.length]).join('');
+  const flowers = foundWords.map((_, i) => p[i % p.length]).join('');
   section.innerHTML = `<div class="progress-flowers">${flowers}</div>`;
 }
 
 function triggerConfetti() {
   requestAnimationFrame(() => {
     const container = document.getElementById('confettiContainer');
-    const emojis = ['🌸','🌼','✨','🌺','💛','🌷','⭐','🌻','💫','🎉'];
+    const emojis = currentTheme.confetti;
     for (let i = 0; i < 14; i++) {
       const p = document.createElement('div');
       p.className = 'confetti-piece';
@@ -837,8 +1212,156 @@ function triggerConfetti() {
   });
 }
 
-newGame();
+// ─── KEYBOARD ────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (document.activeElement === document.getElementById('aiThemeInput')) return;
+  const key = e.key;
+  if (/^[a-zA-Z]$/.test(key)) {
+    const upper = key.toUpperCase();
+    if (letters.includes(upper)) tapLetter(letters.indexOf(upper));
+    return;
+  }
+  if (key === 'Enter')     { if (currentWord.length >= 2) submitWord(); return; }
+  if (key === 'Backspace') { deleteLetter(); return; }
+  if (key === 'Escape')    { clearWord(); return; }
+});
 
+// ─── SHARE ───────────────────────────────────────────────────────────────────
+function shareScore() {
+  const el = document.getElementById('shareConfirm');
+  if (foundWords.length === 0) {
+    el.textContent = 'Find some words first! 🌱';
+    setTimeout(() => el.textContent = '', 2000);
+    return;
+  }
+  const p = currentTheme.progress;
+  const flowers = foundWords.map((_, i) => p[i % p.length]).join('');
+  const text = `${flowers}\nI found ${foundWords.length} word${foundWords.length > 1 ? 's' : ''} and scored ${score} points on PathWords!\npathwords.netlify.app`;
+  navigator.clipboard.writeText(text).then(() => {
+    el.textContent = '✅ Copied to clipboard!';
+    setTimeout(() => el.textContent = '', 2500);
+  }).catch(() => { prompt('Copy this to share:', text); });
+}
+
+// ─── AI THEME GENERATOR ──────────────────────────────────────────────────────
+async function generateAITheme() {
+  const input = document.getElementById('aiThemeInput').value.trim();
+  if (!input) return;
+
+  const btn = document.getElementById('aiThemeBtn');
+  const status = document.getElementById('aiStatus');
+  btn.disabled = true;
+  status.textContent = '✨ Creating your theme…';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You generate color themes for a kids' word puzzle game called PathWords.
+Return ONLY valid JSON — no markdown, no backticks, no explanation whatsoever.
+The JSON must have exactly these fields:
+{
+  "logo": "EMOJI Name<span>Words</span>",
+  "tagline": "EMOJI short phrase · Find words · Fun ending! EMOJI",
+  "foundLabel": "EMOJI Words found",
+  "newGame": "EMOJI New Game",
+  "share": "EMOJI Share my score",
+  "confetti": ["e1","e2","e3","e4","e5","e6","e7","e8","e9","e10"],
+  "progress": ["e1","e2","e3","e4","e5","e6","e7","e8"],
+  "successMsgs": ["EMOJI Nice!", "EMOJI Good!", "EMOJI Great!", "EMOJI Brilliant!", "EMOJI Amazing!"],
+  "vars": {
+    "--bg": "#hex",
+    "--cream": "#hex",
+    "--pollen": "#hex",
+    "--gold": "#hex",
+    "--gold-dark": "#hex",
+    "--sage": "#hex",
+    "--sage-dark": "#hex",
+    "--charcoal": "#hex",
+    "--pink": "#hex",
+    "--pink-dark": "#hex",
+    "--red": "#hex",
+    "--placeholder": "#hex",
+    "--found-border": "#hex"
+  }
+}
+RULES: Kid-friendly and fun. Light themes must have dark charcoal (#333 range). Dark themes must have light charcoal (#eee range) AND bright high-contrast gold/sage. Text contrast must be 4.5:1 minimum. Make it creative and match the vibe perfectly.`,
+        messages: [{ role: 'user', content: `Create a PathWords theme for: "${input}"` }]
+      })
+    });
+
+    const data = await response.json();
+    const raw = data?.content?.[0]?.text?.trim() ?? '';
+    const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/\n?```$/,'').trim();
+    const t = JSON.parse(clean);
+
+    // Build a proper theme object from the AI response
+    const msgs = t.successMsgs || ['✨ Nice!','🌟 Good!','🎉 Great!','🏆 Brilliant!','💫 Amazing!'];
+    const customTheme = {
+      key: 'custom',
+      emoji: '✨',
+      name: input.length > 10 ? input.slice(0,10)+'…' : input,
+      vars: t.vars,
+      logo: t.logo,
+      tagline: t.tagline,
+      foundLabel: t.foundLabel,
+      newGame: t.newGame,
+      share: t.share,
+      confetti: t.confetti,
+      progress: t.progress,
+      success(len, pts) {
+        const m = msgs[Math.min(len - 2, msgs.length - 1)] || msgs[msgs.length - 1];
+        return `${m} ${pts}`;
+      },
+    };
+
+    // Add/replace custom theme and apply it
+    THEMES.custom = customTheme;
+    applyTheme('custom');
+
+    // Add or update the custom button in the picker
+    let customBtn = document.querySelector('[data-theme="custom"]');
+    if (!customBtn) {
+      customBtn = document.createElement('button');
+      customBtn.className = 'theme-btn';
+      customBtn.dataset.theme = 'custom';
+      customBtn.onclick = () => applyTheme('custom');
+      document.getElementById('themeRow').appendChild(customBtn);
+    }
+    customBtn.innerHTML = `<span class="theme-emoji">✨</span><span class="theme-name">${customTheme.name}</span>`;
+
+    status.textContent = `🎉 "${input}" theme applied!`;
+    setTimeout(() => status.textContent = '', 3000);
+
+  } catch (err) {
+    status.textContent = '😅 Something went wrong — try again!';
+    setTimeout(() => status.textContent = '', 3000);
+  }
+
+  btn.disabled = false;
+}
+
+// Allow Enter key in AI input
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('aiThemeInput')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') generateAITheme();
+  });
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildThemePicker();
+// Restore saved theme, or default to Deep Sea
+try {
+  const saved = localStorage.getItem('pathwords-theme');
+  applyTheme((saved && THEMES[saved]) ? saved : 'garden');
+} catch {
+  applyTheme('garden');
+}
+newGame();
 </script>
 </body>
 </html>

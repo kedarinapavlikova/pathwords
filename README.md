@@ -1,10 +1,14 @@
 # 🌹 PathWords
 
 A rose garden word puzzle game built for kids — and anyone who loves words.
+https://pathwords.netlify.app/
 
 PathWords is a browser-based word game inspired by the New York Times Spelling Bee. Nine letters bloom in a garden grid, and players tap them to build words. Find as many real English words as you can, score points for longer words, and watch your garden grow with every discovery.
 
 Built with love for Rosie. 🌸
+
+<img width="614" height="817" alt="image" src="https://github.com/user-attachments/assets/2fd3175f-b634-44f3-8bbc-5bf3075b1067" />
+
 
 ---
 

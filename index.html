@@ -456,6 +456,26 @@
     margin-top: 6px;
   }
 
+  .coming-soon-pill {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--pink-dark);
+    border: 1.5px solid var(--pink-dark);
+    border-radius: 20px;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  .ai-theme-section.disabled-section {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
   /* ── Level-up toast ─────────────────────────── */
   .levelup-toast {
     position: fixed;
@@ -568,11 +588,11 @@
   <div class="theme-row" id="themeRow"></div>
 </div>
 
-<div class="ai-theme-section">
-  <div class="ai-theme-label">✨ Make your own theme</div>
+<div class="ai-theme-section disabled-section">
+  <div class="ai-theme-label">✨ Make your own theme<span class="coming-soon-pill">Coming Soon</span></div>
   <div class="ai-theme-row">
-    <input class="ai-theme-input" id="aiThemeInput" type="text" placeholder="e.g. underwater pirates, cozy winter…" maxlength="60" />
-    <button class="btn btn-ai" id="aiThemeBtn" onclick="generateAITheme()">✨ Create</button>
+    <input class="ai-theme-input" id="aiThemeInput" type="text" placeholder="e.g. underwater pirates, cozy winter…" maxlength="60" disabled />
+    <button class="btn btn-ai" id="aiThemeBtn" disabled>✨ Create</button>
   </div>
   <div class="ai-status" id="aiStatus"></div>
 </div>

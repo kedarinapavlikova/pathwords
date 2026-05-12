@@ -63,6 +63,33 @@
     letter-spacing: 0.5px;
   }
 
+  .app-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .app-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--cream);
+    border: 2px solid var(--found-border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--charcoal);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .app-nav-link:hover, .app-nav-link:active {
+    background: var(--pollen);
+    border-color: var(--gold);
+  }
+
   .score-bar {
     display: flex;
     gap: 10px;
@@ -549,6 +576,9 @@
 <div class="header">
   <div class="logo" id="logoEl">🌹 Path<span>Words</span></div>
   <div class="tagline" id="taglineEl">🌿 Wander the garden · Find words · Bloom! 🌸</div>
+  <div class="app-nav">
+    <a href="readcards.html" class="app-nav-link">🟥 Play ReadCards →</a>
+  </div>
 </div>
 
 <div class="score-bar">
